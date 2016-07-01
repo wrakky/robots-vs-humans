@@ -43,25 +43,16 @@ $(function() {
 	/**
 	 * Populate the popup
 	 */
-	function populate(data) {
-
-		// robots.txt
-		var robots = data.robots;
-		if (robots !== false) {
-			$('#robots').html('<pre>' + RvH.common.Util.htmlEntities(robots) + '</pre>');
-		}
-		else {
-			$('#robots').html('<p>' + chrome.i18n.getMessage("fileNotFound", ["robots.txt"]) + '</p>');	
-		}
+	 function populate(data) {
+ 		// robots.txt
+ 		RvH.common.Util.parseText(data.robots, 'robots.txt', function(data) {
+			$('#robots').html(data);
+		})
 
 		// humans.txt
-		var humans = data.humans;
-		if (humans !== false) {
-			$('#humans').html('<pre>' + RvH.common.Util.htmlEntities(humans) + '</pre>');
-		}
-		else {
-			$('#humans').html('<p>' + chrome.i18n.getMessage("fileNotFound", ["humans.txt"]) + '</p>');	
-		}
+		RvH.common.Util.parseText(data.humans, 'humans.txt', function(data) {
+			$('#humans').html(data);
+		})
 
 		// fight!
 		RvH.Fight.init(data);
